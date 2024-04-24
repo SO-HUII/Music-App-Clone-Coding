@@ -23,6 +23,7 @@ class _HomeViewState extends State<HomeView> {
           child: Column(
             children: <Widget>[
               HomeHeader(),
+              SizedBox(height: 20,),
               PartyRoomWidget(),
             ],
           ),
