@@ -1,3 +1,3 @@
 class MyIconFamily {
-  static const homeLogo = 'assets/logo.svg';
+  static const homeLogo = 'assets/images/logo.svg';
 }
