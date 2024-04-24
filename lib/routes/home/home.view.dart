@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_app_clone_coding/routes/home/components/homeHeader.widget.dart';
+import 'package:music_app_clone_coding/routes/home/components/partyRoom.widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -11,6 +12,22 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return const HomeHeader();
+    return const SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 10,
+          ),
+          child: Column(
+            children: <Widget>[
+              HomeHeader(),
+              PartyRoomWidget(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

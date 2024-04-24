@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyFontFamily {
   static const subTitle = TextStyle(
-    fontSize: 20,
+    fontSize: 17,
     color: Colors.white,
   );
 }
