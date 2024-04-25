@@ -5,4 +5,9 @@ class MyFontFamily {
     fontSize: 17,
     color: Colors.white,
   );
+
+  static const detailTitle = TextStyle(
+    fontSize: 10,
+    color: Colors.grey,
+  );
 }
