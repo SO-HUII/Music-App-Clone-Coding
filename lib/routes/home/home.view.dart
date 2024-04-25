@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_app_clone_coding/routes/home/components/homeHeader.widget.dart';
 import 'package:music_app_clone_coding/routes/home/components/mixtape.widget.dart';
 import 'package:music_app_clone_coding/routes/home/components/partyRoom.widget.dart';
+import 'package:music_app_clone_coding/routes/home/components/recentAlbum.widget.dart';
 import 'package:music_app_clone_coding/routes/home/components/recentListenedMusic.widget.dart';
 import 'package:music_app_clone_coding/routes/home/components/recommendPlayList.widget.dart';
 
@@ -34,6 +35,8 @@ class _HomeViewState extends State<HomeView> {
                 MixTape(),
                 SizedBox(height: 35),
                 RecentListenedMusic(),
+                SizedBox(height: 30),
+                RecentAlbum(),
               ],
             ),
           ),

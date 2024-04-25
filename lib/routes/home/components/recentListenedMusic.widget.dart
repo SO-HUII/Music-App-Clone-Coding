@@ -37,7 +37,7 @@ class RecentListenedMusic extends StatelessWidget {
           child: Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 4,
+              itemCount: 6,
               itemBuilder: (context, index) {
                 return Container(
                   width: 310,
