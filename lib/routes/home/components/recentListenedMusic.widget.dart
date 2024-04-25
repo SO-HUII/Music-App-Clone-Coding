@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:music_app_clone_coding/common/style/font.dart';
 
 List<Map<String, String>> songLists = [
@@ -9,11 +10,21 @@ List<Map<String, String>> songLists = [
   {"Mtitle": "널 제외한 나의 뇌", "Msinger": "DAY6"},
 ];
 
-class RecentListenedMusic extends StatelessWidget {
+class RecentListenedMusic extends StatefulWidget {
   const RecentListenedMusic({super.key});
 
   @override
+  State<RecentListenedMusic> createState() => _RecentListenedMusicState();
+}
+
+class _RecentListenedMusicState extends State<RecentListenedMusic> {
+  late RxBool padEndsValue = false.obs;
+
+  @override
   Widget build(BuildContext context) {
+    final PageController recentSongsController =
+        PageController(initialPage: 0, viewportFraction: 0.8);
+
     return Column(
       children: [
         const Padding(
@@ -34,64 +45,71 @@ class RecentListenedMusic extends StatelessWidget {
         ),
         SizedBox(
           height: 350,
-          child: Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 6,
-              itemBuilder: (context, index) {
-                return Container(
-                  width: 310,
-                  height: 250,
-                  margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Column(
-                    children: songLists.map((songList) {
-                      return Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.lightBlue,
-                            ),
+          child: PageView.builder(
+            controller: recentSongsController,
+            itemCount: 6,
+            padEnds: padEndsValue(),
+            onPageChanged: (index) {
+              if (index != 0 && index != 3) {
+                padEndsValue(true);
+              } else {
+                padEndsValue(false);
+              }
+              setState(() {});
+            },
+            itemBuilder: (context, index) {
+              return Container(
+                width: 310,
+                height: 250,
+                margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Column(
+                  children: songLists.map((songList) {
+                    return Row(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.lightBlue,
                           ),
-                          const SizedBox(width: 15),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  songList['Mtitle'] as String,
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
+                        ),
+                        const SizedBox(width: 15),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                songList['Mtitle'] as String,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
                                 ),
-                                Text(
-                                  songList['Msinger'] as String,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0x4DFFFFFF),
-                                  ),
+                              ),
+                              Text(
+                                songList['Msinger'] as String,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0x4DFFFFFF),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      );
-                    }).toList(),
-                  ),
-                );
-              },
-            ),
+                        ),
+                      ],
+                    );
+                  }).toList(),
+                ),
+              );
+            },
           ),
         ),
       ],
