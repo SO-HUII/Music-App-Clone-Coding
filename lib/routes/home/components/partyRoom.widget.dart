@@ -159,7 +159,7 @@ class PartyRoomWidget extends StatelessWidget {
                                   partyRoomItems[index]['manager']!,
                                   style: const TextStyle(
                                     fontSize: 11,
-                                    color: Color(0xFFFAFAFA),
+                                    color: Colors.grey,
                                   ),
                                 ),
                               ],
