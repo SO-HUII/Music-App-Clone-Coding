@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_clone_coding/common/style/font.dart';
 
+final imagePathList = [
+  'assets/images/singers/singer.png',
+  'assets/images/singers/singer1.png',
+  'assets/images/singers/singer2.png',
+  'assets/images/singers/singer3.png',
+];
+
 class Magazine extends StatefulWidget {
   const Magazine({super.key});
 
@@ -58,14 +65,16 @@ class _MagazineState extends State<Magazine> {
                     Container(
                       width: 300,
                       height: 300,
-                      //alignment: Alignment.bottomLeft,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 15,
                         vertical: 20,
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.pinkAccent,
+                        image: DecorationImage(
+                          image: AssetImage(imagePathList[index]),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,

@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:music_app_clone_coding/common/style/font.dart';
 
+final imagePathList = [
+  'assets/images/singers/singer.png',
+  'assets/images/singers/singer1.png',
+  'assets/images/singers/singer2.png',
+  'assets/images/singers/singer3.png',
+];
+
 class MixTape extends StatelessWidget {
   const MixTape({super.key});
 
@@ -71,7 +78,10 @@ class MixTape extends StatelessWidget {
                             height: 100,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100),
-                              color: Colors.white,
+                              image: DecorationImage(
+                                image: AssetImage(imagePathList[index]),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 20),

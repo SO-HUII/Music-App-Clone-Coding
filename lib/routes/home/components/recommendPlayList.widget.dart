@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:music_app_clone_coding/common/style/color.dart';
 import 'package:music_app_clone_coding/common/style/font.dart';
 
+final imagePathList = [
+  'assets/images/singers/singer.png',
+  'assets/images/singers/singer1.png',
+  'assets/images/singers/singer2.png',
+  'assets/images/singers/singer3.png',
+];
+
 class RecommendPlayList extends StatelessWidget {
   const RecommendPlayList({super.key});
 
@@ -30,7 +37,10 @@ class RecommendPlayList extends StatelessWidget {
                 height: 150,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Colors.yellow,
+                  image: DecorationImage(
+                    image: AssetImage(imagePathList[index]),
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 // child: SvgPicture.asset(
                 //   MyIconFamily.homeLogo,
