@@ -118,6 +118,8 @@ class PartyRoomWidget extends StatelessWidget {
                   itemCount: partyRoomItems.length,
                   itemBuilder: (context, index) {
                     return Container(
+                      width: 200,
+                      height: 60,
                       padding: const EdgeInsets.all(5),
                       margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                       decoration: BoxDecoration(
@@ -130,7 +132,7 @@ class PartyRoomWidget extends StatelessWidget {
                           vertical: 1,
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(50),
@@ -142,7 +144,7 @@ class PartyRoomWidget extends StatelessWidget {
                             ),
                             const SizedBox(width: 10),
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   partyRoomItems[index]['title']!,
@@ -159,7 +161,7 @@ class PartyRoomWidget extends StatelessWidget {
                                   partyRoomItems[index]['manager']!,
                                   style: const TextStyle(
                                     fontSize: 11,
-                                    color: Color(0xFFFAFAFA),
+                                    color: Colors.grey,
                                   ),
                                 ),
                               ],
