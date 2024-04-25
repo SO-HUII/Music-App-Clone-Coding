@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:music_app_clone_coding/common/style/font.dart';
 
 class MixTape extends StatelessWidget {
