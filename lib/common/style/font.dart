@@ -7,7 +7,7 @@ class MyFontFamily {
   );
 
   static const detailTitle = TextStyle(
-    fontSize: 10,
+    fontSize: 11,
     color: Colors.grey,
   );
 }

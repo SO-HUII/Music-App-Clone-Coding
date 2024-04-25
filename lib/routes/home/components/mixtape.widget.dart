@@ -9,20 +9,23 @@ class MixTape extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "나를 위한 믹스테잎",
-              style: MyFontFamily.subTitle,
-            ),
-            Text(
-              "더보기",
-              style: MyFontFamily.detailTitle,
-            ),
-          ],
+        const Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "나를 위한 믹스테잎",
+                style: MyFontFamily.subTitle,
+              ),
+              Text(
+                "더보기",
+                style: MyFontFamily.detailTitle,
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
         SizedBox(
           height: 230,
           child: Row(
