@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_app_clone_coding/common/style/font.dart';
 
 List<Map<String, String>> partyRoomItems = [
+  {"image": "", "title": "", "manager": ""},
   {
     "image": "assets/images/singers/singer.png",
     "title": "마이데이 모여",
@@ -99,77 +100,85 @@ class PartyRoomWidget extends StatelessWidget {
           height: 50,
           child: Row(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: const Color(0xFF424242)),
-                ),
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(width: 20),
               Expanded(
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: partyRoomItems.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      width: 200,
-                      height: 60,
-                      padding: const EdgeInsets.all(5),
-                      margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF2a2a2a),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 4,
-                          vertical: 1,
+                    if (index == 0) {
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 20, 10),
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: const Color(0xFF424242)),
+                          ),
+                          child: const Icon(
+                            Icons.add,
+                            size: 20,
+                            color: Colors.white,
+                          ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: Image.asset(
-                                partyRoomItems[index]['image']!,
-                                width: 30,
-                                height: 30,
+                      );
+                    } else {
+                      return Container(
+                        width: 200,
+                        height: 60,
+                        padding: const EdgeInsets.all(5),
+                        margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2a2a2a),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                            vertical: 1,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Image.asset(
+                                  partyRoomItems[index]['image']!,
+                                  width: 30,
+                                  height: 30,
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 10),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  partyRoomItems[index]['title']!,
-                                  overflow: TextOverflow.fade,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                  style: const TextStyle(
-                                    fontSize: 12.5,
-                                    color: Colors.white,
+                              const SizedBox(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    partyRoomItems[index]['title']!,
+                                    overflow: TextOverflow.fade,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    style: const TextStyle(
+                                      fontSize: 12.5,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  partyRoomItems[index]['manager']!,
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    color: Colors.grey,
+                                  Text(
+                                    partyRoomItems[index]['manager']!,
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(width: 10),
-                          ],
+                                ],
+                              ),
+                              const SizedBox(width: 10),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   },
                 ),
               ),
