@@ -21,26 +21,26 @@ class _HomeViewState extends State<HomeView> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: const SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 12,
               vertical: 10,
             ),
             child: Column(
               children: <Widget>[
-                HomeHeader(),
-                SizedBox(height: 30),
-                PartyRoomWidget(),
-                SizedBox(height: 30),
-                RecommendPlayList(),
-                MixTape(),
-                SizedBox(height: 35),
-                RecentListenedMusic(),
-                SizedBox(height: 30),
+                const HomeHeader(),
+                const SizedBox(height: 30),
+                const PartyRoomWidget(),
+                const SizedBox(height: 30),
+                const RecommendPlayList(),
+                const MixTape(),
+                const SizedBox(height: 35),
+                const RecentListenedMusic(),
+                const SizedBox(height: 30),
                 RecentAlbum(),
-                SizedBox(height: 40),
-                Magazine(),
+                const SizedBox(height: 40),
+                const Magazine(),
               ],
             ),
           ),

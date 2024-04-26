@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       initialRoute: '/',
-        getPages: [
-          GetPage(name: '/home', page: () => const HomeView()),
-        ],
+      getPages: [
+        GetPage(name: '/home', page: () => const HomeView()),
+      ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
