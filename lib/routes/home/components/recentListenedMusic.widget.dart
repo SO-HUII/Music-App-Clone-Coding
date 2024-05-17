@@ -7,7 +7,7 @@ import 'package:music_app_clone_coding/models/home.model.dart';
 List<Map<String, String>> songLists = [
   {"Mtitle": "다시 만난 세계", "Msinger": "소녀시대"},
   {"Mtitle": "LOVE DIVE", "Msinger": "IVE"},
-  {"Mtitle": "Afer Like", "Msinger": "IVE"},
+  {"Mtitle": "After Like", "Msinger": "IVE"},
   {"Mtitle": "Loveable", "Msinger": "조유리"},
   {"Mtitle": "널 제외한 나의 뇌", "Msinger": "DAY6"},
 ];
