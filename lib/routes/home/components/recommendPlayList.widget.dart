@@ -42,12 +42,6 @@ class RecommendPlayList extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                // child: SvgPicture.asset(
-                //   MyIconFamily.homeLogo,
-                //   fit: BoxFit.contain,
-                //   height: 30,
-                //   color: Colors.white,
-                // ),
               ),
               const SizedBox(height: 5),
               const Text(
