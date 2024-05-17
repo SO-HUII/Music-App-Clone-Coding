@@ -1,5 +1,6 @@
 class PlayerModel {
-  final String singer, album, title, duration, image, file, lyrics;
+  String singer, album, title, image, file, lyrics;
+  int duration;
 
   PlayerModel.fromJson(Map<String, dynamic> json)
       : singer = json['singer'],
