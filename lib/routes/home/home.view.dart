@@ -7,6 +7,7 @@ import 'package:music_app_clone_coding/routes/home/components/partyRoom.widget.d
 import 'package:music_app_clone_coding/routes/home/components/recentAlbum.widget.dart';
 import 'package:music_app_clone_coding/routes/home/components/recentListenedMusic.widget.dart';
 import 'package:music_app_clone_coding/routes/home/components/recommendPlayList.widget.dart';
+import 'package:music_app_clone_coding/routes/home/components/smallPlayer.widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -21,29 +22,36 @@ class _HomeViewState extends State<HomeView> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 10,
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      const HomeHeader(),
+                      const SizedBox(height: 30),
+                      const PartyRoomWidget(),
+                      const SizedBox(height: 30),
+                      const RecommendPlayList(),
+                      const MixTape(),
+                      const SizedBox(height: 35),
+                      const RecentListenedMusic(),
+                      const SizedBox(height: 30),
+                      RecentAlbum(),
+                      const SizedBox(height: 40),
+                      const Magazine(),
+                    ],
+                  ),
+                ),
+              ),
             ),
-            child: Column(
-              children: <Widget>[
-                const HomeHeader(),
-                const SizedBox(height: 30),
-                const PartyRoomWidget(),
-                const SizedBox(height: 30),
-                const RecommendPlayList(),
-                const MixTape(),
-                const SizedBox(height: 35),
-                const RecentListenedMusic(),
-                const SizedBox(height: 30),
-                RecentAlbum(),
-                const SizedBox(height: 40),
-                const Magazine(),
-              ],
-            ),
-          ),
+            const SmallPlayer(),
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.black,
