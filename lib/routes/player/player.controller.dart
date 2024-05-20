@@ -11,18 +11,22 @@ class PlayerController extends GetxController {
     await getPlayerMusics();
   }
 
-  Rxn<PlayerModel> playerSong = Rxn<PlayerModel>();
+  Rxn<PlayerModel> playerMusic = Rxn<PlayerModel>();
 
   getPlayerMusics() async {
     final data = await _playerRepository.getPlayerSongs();
 
     if (data != null && data.isNotEmpty) {
       final result = PlayerModel.fromJson(data);
-      playerSong(result);
+      playerMusic(result);
     }
   }
 
   RxBool isPlaying = false.obs;
+  late Duration duration =
+      Duration(milliseconds: playerMusic.value?.duration ?? 0);
+  Duration position = Duration.zero;
+
   pauseMusic() async {
     isPlaying.value = false;
   }
