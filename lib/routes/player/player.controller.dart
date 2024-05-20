@@ -23,9 +23,8 @@ class PlayerController extends GetxController {
   }
 
   RxBool isPlaying = false.obs;
-  late Duration duration =
-      Duration(milliseconds: playerMusic.value?.duration ?? 0);
-  Duration position = Duration.zero;
+  Rx<Duration> duration = const Duration().obs;
+  Rx<Duration> position = const Duration().obs;
 
   pauseMusic() async {
     isPlaying.value = false;
