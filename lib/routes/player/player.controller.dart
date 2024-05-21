@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:get/state_manager.dart';
 import 'package:music_app_clone_coding/models/player.model.dart';
 import 'package:music_app_clone_coding/repository/player.repository.dart';
@@ -32,4 +33,16 @@ class PlayerController extends GetxController {
   }
 
   RxInt selectedIndex = 1.obs;
+
+  RxList lyricsList = [].obs;
+  RxList timeList = [].obs;
+
+  timeStampList() async {
+    lyricsList = playerMusic.value?.lyrics.split('\n').toList().obs ?? [].obs;
+
+    for (String lyric in lyricsList) {
+      String time = lyric.split(']')[0].substring(1);
+      timeList.add(time);
+    }
+  }
 }
