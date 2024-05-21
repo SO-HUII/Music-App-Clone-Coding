@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:music_app_clone_coding/common/style/font.dart';
 import 'package:music_app_clone_coding/routes/player/player.controller.dart';
 
