@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 import 'package:music_app_clone_coding/models/player.model.dart';
 import 'package:music_app_clone_coding/repository/player.repository.dart';
 
@@ -29,4 +30,6 @@ class PlayerController extends GetxController {
   pauseMusic() async {
     isPlaying.value = false;
   }
+
+  RxInt selectedIndex = 1.obs;
 }
