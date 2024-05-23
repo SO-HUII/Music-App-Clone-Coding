@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_clone_coding/routes/home/home.view.dart';
+import 'package:music_app_clone_coding/routes/player/lyrics.view.dart';
+import 'package:music_app_clone_coding/routes/player/player.controller.dart';
 import 'package:music_app_clone_coding/routes/player/player.view.dart';
 
 void main() {
@@ -18,7 +20,14 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       getPages: [
         GetPage(name: '/home', page: () => const HomeView()),
-        GetPage(name: '/player', page: () => const PlayerView()),
+        GetPage(
+          name: '/player',
+          page: () => const PlayerView(),
+          binding: BindingsBuilder(() {
+            Get.put(PlayerController());
+          }),
+        ),
+        GetPage(name: '/lyrics', page: () => const LyricsView()),
       ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
