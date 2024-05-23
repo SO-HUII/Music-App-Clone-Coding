@@ -1,9 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/state_manager.dart';
 import 'package:music_app_clone_coding/common/style/color.dart';
 import 'package:music_app_clone_coding/routes/player/player.controller.dart';
 
@@ -12,27 +9,27 @@ class PlayerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final audioPlayer = AudioPlayer();
+    //final audioPlayer = AudioPlayer();
 
-    final PlayerController controller = PlayerController();
+    final PlayerController controller = PlayerController.to;
     controller.getPlayerMusics();
 
     // listen to states: playing, paused, stopped
-    audioPlayer.onPlayerStateChanged.listen((state) {
+    controller.audioPlayer.value.onPlayerStateChanged.listen((state) {
       controller.isPlaying.value = state == PlayerState.playing;
     });
 
     // listen to audio duration
-    audioPlayer.onDurationChanged.listen((Duration newDuration) {
+    controller.audioPlayer.value.onDurationChanged.listen((Duration newDuration) {
       controller.duration(newDuration);
     });
 
     // listen to audio position
-    audioPlayer.onPositionChanged.listen((Duration newPosition) {
+    controller.audioPlayer.value.onPositionChanged.listen((Duration newPosition) {
       controller.position(newPosition);
     });
 
-    audioPlayer.onPlayerComplete.listen((_) {
+    controller.audioPlayer.value.onPlayerComplete.listen((_) {
       controller.position = controller.duration;
     });
 
@@ -73,7 +70,9 @@ class PlayerView extends StatelessWidget {
             SingleChildScrollView(
               child: Obx(() {
                 return Text(
-                  controller.playerMusic.value?.lyrics ?? '',
+                  controller.playerMusic.value?.lyrics
+                          .replaceAll(RegExp(r'\[[^\]]+\]'), '') ??
+                      '',
                   maxLines: 2,
                   style: const TextStyle(
                     fontSize: 15,
@@ -132,8 +131,8 @@ class PlayerView extends StatelessWidget {
                   value: controller.position.value.inSeconds.toDouble(),
                   thumbColor: MyColorFamily.main,
                   onChanged: (value) async {
-                    await audioPlayer.seek(Duration(seconds: value.toInt()));
-                    await audioPlayer.resume(); // play audio if was paused
+                    await controller.audioPlayer.value.seek(Duration(seconds: value.toInt()));
+                    await controller.audioPlayer.value.resume(); // play audio if was paused
                   },
                 );
               }),
@@ -156,8 +155,6 @@ class PlayerView extends StatelessWidget {
                   Obx(() {
                     return Text(
                       '${(controller.duration.value - controller.position.value).inMinutes.remainder(60).toString().padLeft(1, '0')}:${((controller.duration.value - controller.position.value).inSeconds.remainder(60)).toString().padLeft(2, '0')}',
-                      // (controller.duration.value - controller.position.value)
-                      //     .toString(),
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 13,
@@ -180,7 +177,7 @@ class PlayerView extends StatelessWidget {
                 // -10 seconds
                 IconButton(
                   onPressed: () {
-                    audioPlayer.seek(Duration(
+                    controller.audioPlayer.value.seek(Duration(
                         seconds: controller.position.value.inSeconds - 10));
                   },
                   icon: const Icon(
@@ -193,10 +190,9 @@ class PlayerView extends StatelessWidget {
                 IconButton(
                   onPressed: () async {
                     if (controller.isPlaying.value) {
-                      await audioPlayer.pause();
+                      await controller.audioPlayer.value.pause();
                     } else {
-                      // await audioPlayer.resume();
-                      await audioPlayer
+                      await controller.audioPlayer.value
                           .play(UrlSource(controller.playerMusic.value!.file));
                     }
                   },
@@ -210,10 +206,10 @@ class PlayerView extends StatelessWidget {
                     );
                   }),
                 ),
-                // // +10 seconds
+                // +10 seconds
                 IconButton(
                   onPressed: () {
-                    audioPlayer.seek(Duration(
+                    controller.audioPlayer.value.seek(Duration(
                         seconds: controller.position.value.inSeconds + 10));
                   },
                   icon: const Icon(
@@ -232,6 +228,7 @@ class PlayerView extends StatelessWidget {
           ],
         ),
       ),
+      // bottom navigation bar
       bottomNavigationBar: Obx(() {
         return BottomNavigationBar(
           backgroundColor: Colors.black,
@@ -241,7 +238,11 @@ class PlayerView extends StatelessWidget {
           type: BottomNavigationBarType.fixed,
           onTap: (int index) {
             controller.selectedIndex.value = index;
-            if (index == 0) {}
+            if (index == 0) {
+              Get.toNamed('/lyrics');
+            } else if (index == 1) {
+              Get.toNamed('/player');
+            }
           },
           currentIndex: controller.selectedIndex.value,
           items: const [
