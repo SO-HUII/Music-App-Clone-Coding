@@ -115,25 +115,24 @@ class SmallPlayer extends StatelessWidget {
                 ),
                 Obx(() {
                   return IconButton(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      onPressed: () async {
-                        if (controller.isPlaying.value) {
-                          await audioPlayer.pause();
-                        } else {
-                          // await audioPlayer.resume();
-                          await audioPlayer.play(
-                              UrlSource(controller.playerMusic.value!.file));
-                        }
-                      },
-                      icon: Obx(() {
-                        return Icon(
-                          controller.isPlaying.value
-                              ? Icons.pause
-                              : Icons.play_arrow,
-                          size: 35,
-                          color: Colors.white,
-                        );
-                      }));
+                    padding: const EdgeInsets.only(bottom: 10),
+                    onPressed: () async {
+                      if (controller.isPlaying.value) {
+                        await audioPlayer.pause();
+                      } else {
+                        // await audioPlayer.resume();
+                        await audioPlayer.play(
+                            UrlSource(controller.playerMusic.value!.file));
+                      }
+                    },
+                    icon: Icon(
+                      controller.isPlaying.value
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                      size: 35,
+                      color: Colors.white,
+                    ),
+                  );
                 }),
                 const Padding(
                   padding: EdgeInsets.only(bottom: 10),
