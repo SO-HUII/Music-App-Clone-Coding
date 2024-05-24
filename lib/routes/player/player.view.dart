@@ -1,6 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:music_app_clone_coding/common/style/color.dart';
 import 'package:music_app_clone_coding/routes/home/components/twoLineLyrics.widget.dart';
