@@ -103,7 +103,6 @@ class LyricsView extends StatelessWidget {
         : timestamp[index + 1];
 
     if (startTime <= position && position < endTime) {
-      // print("시작: ${startTime} 끝: ${endTime}");
       return true;
     } else {
       return false;

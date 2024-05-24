@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_clone_coding/common/style/color.dart';
+import 'package:music_app_clone_coding/routes/home/components/twoLineLyrics.widget.dart';
 import 'package:music_app_clone_coding/routes/player/player.controller.dart';
 
 class PlayerView extends StatelessWidget {
@@ -20,12 +21,14 @@ class PlayerView extends StatelessWidget {
     });
 
     // listen to audio duration
-    controller.audioPlayer.value.onDurationChanged.listen((Duration newDuration) {
+    controller.audioPlayer.value.onDurationChanged
+        .listen((Duration newDuration) {
       controller.duration(newDuration);
     });
 
     // listen to audio position
-    controller.audioPlayer.value.onPositionChanged.listen((Duration newPosition) {
+    controller.audioPlayer.value.onPositionChanged
+        .listen((Duration newPosition) {
       controller.position(newPosition);
     });
 
@@ -66,22 +69,39 @@ class PlayerView extends StatelessWidget {
                 ),
               );
             }),
-            const SizedBox(height: 40),
-            SingleChildScrollView(
-              child: Obx(() {
-                return Text(
-                  controller.playerMusic.value?.lyrics
-                          .replaceAll(RegExp(r'\[[^\]]+\]'), '') ??
-                      '',
-                  maxLines: 2,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    color: Colors.grey,
-                  ),
-                );
-              }),
-            ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
+            // SingleChildScrollView(
+            //   child: Obx(() {
+            //     // int index = 0;
+            //     // for (int i = 0; i < controller.lyricsList.length; i++) {
+            //     //   if (isCurrentLyric(
+            //     //       controller.lyricsList, controller.timeList, i)) {
+            //     //     index = i;
+            //     //   }
+            //     // }
+            //     // return Column(
+            //     //   children: [
+            //     //     lyricLine(
+            //     //         controller.lyricsList, controller.timeList, index),
+            //     //     lyricLine(
+            //     //         controller.lyricsList, controller.timeList, index + 1),
+            //     //   ],
+            //     // );
+            //     // return Text(
+            //     //   controller.playerMusic.value?.lyrics
+            //     //           .replaceAll(RegExp(r'\[[^\]]+\]'), '') ??
+            //     //       '',
+            //     //   maxLines: 2,
+            //     //   style: const TextStyle(
+            //     //     fontSize: 15,
+            //     //     color: Colors.grey,
+            //     //   ),
+            //     // );
+            //     return const TwoLineLyrics();
+            //   }),
+            // ),
+            const SingleChildScrollView(child: TwoLineLyrics()),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,8 +151,10 @@ class PlayerView extends StatelessWidget {
                   value: controller.position.value.inSeconds.toDouble(),
                   thumbColor: MyColorFamily.main,
                   onChanged: (value) async {
-                    await controller.audioPlayer.value.seek(Duration(seconds: value.toInt()));
-                    await controller.audioPlayer.value.resume(); // play audio if was paused
+                    await controller.audioPlayer.value
+                        .seek(Duration(seconds: value.toInt()));
+                    await controller.audioPlayer.value
+                        .resume(); // play audio if was paused
                   },
                 );
               }),
@@ -262,5 +284,60 @@ class PlayerView extends StatelessWidget {
         );
       }),
     );
+  }
+
+  // Widget lyricLine(List lyricList, timeList, int index) {
+  //   if (index == lyricList.length) {
+  //     return const Text('');
+  //   }
+  //   return Center(
+  //     child: Obx(() {
+  //       return Text(
+  //         lyricList[index].replaceAll(RegExp(r'\[[^\]]+\]'), '') ?? '',
+  //         style: TextStyle(
+  //           fontSize: isCurrentLyric(lyricList, timeList, index) ? 20 : 18,
+  //           fontWeight: isCurrentLyric(lyricList, timeList, index)
+  //               ? FontWeight.bold
+  //               : FontWeight.normal,
+  //           color: isCurrentLyric(lyricList, timeList, index)
+  //               ? Colors.white
+  //               : Colors.grey,
+  //         ),
+  //       );
+  //     }),
+  //   );
+  // }
+
+  // bool isCurrentLyric(List lyricList, timeList, int index) {
+  //   final PlayerController playerController = PlayerController.to;
+
+  //   Duration position = playerController.position.value;
+  //   Duration startTime = timeList[index];
+  //   Duration endTime = timeList.length == index + 1
+  //       ? playerController.duration.value
+  //       : timeList[index + 1];
+
+  //   if (startTime <= position && position < endTime) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  bool isCurrentLyric(List timestamp, int index) {
+    PlayerController playerController = PlayerController.to;
+    // player의 현재 position값
+    Duration position = playerController.position.value;
+    Duration startTime = timestamp[index];
+    Duration endTime = timestamp.length == index + 1 // 다음 가사의 타임스탬프 값
+        ? playerController.duration.value // player의 현재 duration값
+        : timestamp[index + 1];
+
+    if (startTime <= position && position < endTime) {
+      // print("시작: ${startTime} 끝: ${endTime}");
+      return true;
+    } else {
+      return false;
+    }
   }
 }
