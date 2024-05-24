@@ -1,7 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/state_manager.dart';
 import 'package:music_app_clone_coding/models/player.model.dart';
 import 'package:music_app_clone_coding/repository/player.repository.dart';
 
@@ -35,6 +33,7 @@ class PlayerController extends GetxController {
   }
 
   RxInt selectedIndex = 1.obs;
+  // RxInt index = 0.obs;
 
   RxList<String> lyricsList = <String>[].obs; // 가사 리스트
   RxList<Duration> timeList = <Duration>[].obs; // 가사에서 추출한 타임 스탬프 리스트
@@ -47,11 +46,13 @@ class PlayerController extends GetxController {
       String timeStamp = lyric.split(']')[0].substring(1);
 
       List<String> time = timeStamp.split(':');
-      int hour = int.parse(time[0]);
-      int minute = int.parse(time[1]);
-      int second = int.parse(time[2]);
+      int minute = int.parse(time[0]);
+      int second = int.parse(time[1]);
+      int millisecond = int.parse(time[2]);
 
-      Duration dTime = Duration(hours: hour, minutes: minute, seconds: second);
+      Duration dTime =
+          Duration(minutes: minute, seconds: second, milliseconds: millisecond);
+
       timeList.add(dTime);
     }
   }
