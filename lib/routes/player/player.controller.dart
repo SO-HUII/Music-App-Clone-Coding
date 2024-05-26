@@ -56,4 +56,9 @@ class PlayerController extends GetxController {
       timeList.add(dTime);
     }
   }
+
+  RxBool isLike = false.obs;
+    saveLikeSong() async {
+      isLike.value = true;
+    }
 }

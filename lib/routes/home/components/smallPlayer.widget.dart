@@ -10,7 +10,7 @@ class SmallPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PlayerController controller = PlayerController();
+    final PlayerController controller = PlayerController.to;
     controller.getPlayerMusics();
     controller.pauseMusic();
 
