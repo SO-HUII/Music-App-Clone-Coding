@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:music_app_clone_coding/routes/player/player.controller.dart';
 
@@ -12,14 +13,14 @@ class TwoLineLyrics extends StatelessWidget {
     controller.timeStampList();
 
     return FutureBuilder(
-        future: _fetch1(),
+        future: rootBundle.loadString(controller.lyricsList.toString()),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const CircularProgressIndicator();
           } else if (controller.lyricsList.isEmpty) {
             return const Center(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: EdgeInsets.symmetric(vertical: 15),
                 child: Text(
                   "등록된 가사가 없습니다",
                   style: TextStyle(
@@ -30,13 +31,13 @@ class TwoLineLyrics extends StatelessWidget {
               ),
             );
           } else {
-            int index = 0;
-            for (int i = 0; i < controller.lyricsList.length; i++) {
-              if (isCurrentLyric(controller.timeList, i)) {
-                index = i;
-              }
-            }
             return Obx(() {
+              int index = 0;
+              for (int i = 0; i < controller.lyricsList.length; i++) {
+                if (isCurrentLyric(controller.timeList, i)) {
+                  index = i;
+                }
+              }
               return Column(
                 children: [
                   lyricLine(controller.lyricsList, controller.timeList, index),
@@ -59,7 +60,7 @@ class TwoLineLyrics extends StatelessWidget {
       child: Text(
         lyricsList[index].replaceAll(RegExp(r'\[[^\]]+\]'), ''),
         style: TextStyle(
-          fontSize: 18,
+          fontSize: isCurrentLyric(timestamp, index) ? 18 : 16.5,
           fontWeight: isCurrentLyric(timestamp, index)
               ? FontWeight.bold
               : FontWeight.normal,
@@ -84,10 +85,5 @@ class TwoLineLyrics extends StatelessWidget {
     } else {
       return false;
     }
-  }
-
-  Future<String> _fetch1() async {
-    await Future.delayed(const Duration(seconds: 2));
-    return 'Call Data';
   }
 }

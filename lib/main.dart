@@ -19,14 +19,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/home', page: () => const HomeView()),
         GetPage(
-          name: '/player',
-          page: () => const PlayerView(),
+          name: '/home',
+          page: () => const HomeView(),
           binding: BindingsBuilder(() {
             Get.put(PlayerController());
           }),
         ),
+        GetPage(name: '/player', page: () => const PlayerView()),
         GetPage(name: '/lyrics', page: () => const LyricsView()),
       ],
       theme: ThemeData(
