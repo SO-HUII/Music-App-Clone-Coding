@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_clone_coding/routes/player/player.controller.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class LyricsView extends StatelessWidget {
   const LyricsView({super.key});
@@ -12,38 +11,17 @@ class LyricsView extends StatelessWidget {
     controller.getPlayerMusics();
     controller.timeStampList();
 
-    final ItemScrollController itemScrollController = ItemScrollController();
-    final ScrollOffsetController scrollOffsetController =
-        ScrollOffsetController();
-    final ItemPositionsListener itemPositionsListener =
-        ItemPositionsListener.create();
-    final ScrollOffsetListener scrollOffsetListener =
-        ScrollOffsetListener.create();
-    // StreamSubscription? streamSubscription;
-    //
-    // void init() {
-    //   streamSubscription = audioPlayer.onPositionChanged.listen((duration) {
-    //     DateTime dt = DateTime(2000, 1, 1).copyWith(
-    //       hour: duration.inHours,
-    //       minute: duration.inMinutes.remainder(60),
-    //       second: duration.inSeconds.remainder(60),
-    //     );
-    //     print("dt: ${dt}");
-    //     if (controller.timeList.isNotEmpty) {
-    //       for (int index = 0; index < controller.timeList.length; index++) {
-    //         if (index > 4 &&
-    //             DateTime.parse(controller.position.toString()).isAfter(dt)) {
-    //           itemScrollController.scrollTo(
-    //               index: index - 3,
-    //               duration: const Duration(milliseconds: 600));
-    //           break;
-    //         }
-    //       }
-    //     }
-    //   });
-    // }
+    final ScrollController scrollController =
+        ScrollController(keepScrollOffset: true);
 
-    // init();
+    // GlobalKey 생성
+    List<GlobalKey> firstKeys = [];
+    void initState() {
+      firstKeys =
+          List.generate(controller.lyricsList.length, (index) => GlobalKey());
+    }
+
+    initState();
 
     return Scaffold(
       backgroundColor: Colors.black54,
@@ -56,18 +34,27 @@ class LyricsView extends StatelessWidget {
                 child: StreamBuilder(
                     stream: controller.audioPlayer.value.onPositionChanged,
                     builder: (context, snapshot) {
-                      return ScrollablePositionedList.builder(
-                        itemCount: controller.playerMusic.value!.lyrics
-                            .split('\n')
-                            .toList()
-                            .length,
+                      final items = controller.playerMusic.value!.lyrics
+                          .replaceAll(RegExp(r'\[[^\]]+\]'), '')
+                          .split('\n');
+
+                      return ListView.builder(
+                        itemCount: items.length,
                         itemBuilder: (context, index) {
-                          return Obx(() {
-                            return Text(
-                              controller.playerMusic.value!.lyrics
-                                  .replaceAll(RegExp(r'\[[^\]]+\]'), '')
-                                  .split('\n')
-                                  .toList()[index],
+                          if (isCurrentLyric(controller.timeList, index)) {
+                            if (firstKeys[index].currentContext != null) {
+                              Scrollable.ensureVisible(
+                                firstKeys[index].currentContext!,
+                                alignment: 0.3,
+                                duration: const Duration(milliseconds: 350),
+                              );
+                            }
+                          }
+
+                          return GestureDetector(
+                            key: firstKeys[index],
+                            child: Text(
+                              items[index],
                               style: TextStyle(
                                 color:
                                     isCurrentLyric(controller.timeList, index)
@@ -78,13 +65,10 @@ class LyricsView extends StatelessWidget {
                                         ? 18
                                         : 16,
                               ),
-                            );
-                          });
+                            ),
+                          );
                         },
-                        itemScrollController: itemScrollController,
-                        scrollOffsetController: scrollOffsetController,
-                        itemPositionsListener: itemPositionsListener,
-                        scrollOffsetListener: scrollOffsetListener,
+                        controller: scrollController,
                       );
                     }),
               ),
@@ -95,8 +79,8 @@ class LyricsView extends StatelessWidget {
 
   bool isCurrentLyric(List timestamp, int index) {
     PlayerController playerController = PlayerController.to;
-    // player의 현재 position값
-    Duration position = playerController.position.value;
+
+    Duration position = playerController.position.value; // player의 현재 position값
     Duration startTime = timestamp[index];
     Duration endTime = timestamp.length == index + 1 // 다음 가사의 타임스탬프 값
         ? playerController.duration.value // player의 현재 duration값
