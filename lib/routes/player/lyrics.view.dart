@@ -34,39 +34,38 @@ class LyricsView extends StatelessWidget {
                 child: StreamBuilder(
                     stream: controller.audioPlayer.value.onPositionChanged,
                     builder: (context, snapshot) {
+                      final items = controller.playerMusic.value!.lyrics
+                          .replaceAll(RegExp(r'\[[^\]]+\]'), '')
+                          .split('\n');
+
                       return ListView.builder(
-                        itemCount: controller.playerMusic.value!.lyrics
-                            .split('\n')
-                            .toList()
-                            .length,
+                        itemCount: items.length,
                         itemBuilder: (context, index) {
+                          if (isCurrentLyric(controller.timeList, index)) {
+                            if (firstKeys[index].currentContext != null) {
+                              Scrollable.ensureVisible(
+                                firstKeys[index].currentContext!,
+                                alignment: 0.3,
+                                duration: const Duration(milliseconds: 350),
+                              );
+                            }
+                          }
+
                           return GestureDetector(
                             key: firstKeys[index],
-                            child: Obx(() {
-                              if (isCurrentLyric(controller.timeList, index)) {
-                                Scrollable.ensureVisible(
-                                  firstKeys[index].currentContext!,
-                                  alignment: 0.3,
-                                  duration: const Duration(milliseconds: 350),
-                                );
-                              }
-                              return Text(
-                                controller.playerMusic.value!.lyrics
-                                    .replaceAll(RegExp(r'\[[^\]]+\]'), '')
-                                    .split('\n')
-                                    .toList()[index],
-                                style: TextStyle(
-                                  color:
-                                      isCurrentLyric(controller.timeList, index)
-                                          ? Colors.white
-                                          : Colors.grey,
-                                  fontSize:
-                                      isCurrentLyric(controller.timeList, index)
-                                          ? 18
-                                          : 16,
-                                ),
-                              );
-                            }),
+                            child: Text(
+                              items[index],
+                              style: TextStyle(
+                                color:
+                                    isCurrentLyric(controller.timeList, index)
+                                        ? Colors.white
+                                        : Colors.grey,
+                                fontSize:
+                                    isCurrentLyric(controller.timeList, index)
+                                        ? 18
+                                        : 16,
+                              ),
+                            ),
                           );
                         },
                         controller: scrollController,
