@@ -57,8 +57,13 @@ class PlayerController extends GetxController {
     }
   }
 
+  // @override
+  // void onInit() {
+  //   ever(isCurPosition, (_) => isCurPosition);
+  //   super.onInit();
+  // }
+
+  RxBool isCurPosition = false.obs;
+
   RxBool isLike = false.obs;
-    saveLikeSong() async {
-      isLike.value = true;
-    }
 }
