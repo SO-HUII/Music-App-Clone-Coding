@@ -56,9 +56,9 @@ class _HomeViewState extends State<HomeView> {
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.black,
           selectedItemColor: MyColorFamily.main,
-          unselectedItemColor: Colors.grey,
+          unselectedItemColor: Colors.grey.withOpacity(.60),
           selectedLabelStyle:
-              const TextStyle(fontSize: 10, fontWeight: FontWeight.normal),
+              const TextStyle(fontSize: 11, fontWeight: FontWeight.normal),
           unselectedLabelStyle:
               const TextStyle(fontSize: 10, fontWeight: FontWeight.normal),
           type: BottomNavigationBarType.fixed,
@@ -76,8 +76,8 @@ class _HomeViewState extends State<HomeView> {
               label: '오디오',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: '검색',
+              icon: Icon(Icons.queue_music),
+              label: '재생목록',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
