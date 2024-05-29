@@ -248,6 +248,8 @@ class PlayerView extends StatelessWidget {
               Get.toNamed('/lyrics');
             } else if (index == 1) {
               Get.toNamed('/player');
+            } else if (index == 2) {
+              Get.toNamed('/search');
             }
           },
           currentIndex: controller.selectedIndex.value,
@@ -261,7 +263,7 @@ class PlayerView extends StatelessWidget {
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.queue_music),
+              icon: Icon(Icons.search),
               label: '',
             ),
           ],

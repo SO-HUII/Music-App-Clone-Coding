@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:music_app_clone_coding/routes/player/player.controller.dart';
 
 class LyricsView extends StatelessWidget {
