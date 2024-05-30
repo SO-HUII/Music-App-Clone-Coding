@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:music_app_clone_coding/api/api_service.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:music_app_clone_coding/common/style/font.dart';
-import 'package:music_app_clone_coding/models/home.model.dart';
-import 'package:music_app_clone_coding/routes/home/components/recentListenedMusic.widget.dart';
+import 'package:music_app_clone_coding/routes/player/music.controller.dart';
 
-class SearchView extends StatefulWidget {
+class SearchView extends StatelessWidget {
   const SearchView({super.key});
 
   @override
-  State<SearchView> createState() => _SearchViewState();
-}
-
-class _SearchViewState extends State<SearchView> {
-  //final PlayerController controller = PlayerController.to;
-  final Future<List<HomeModel>> songs = ApiService.getSongs();
-  final textEditingController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
+    final textEditingController = TextEditingController();
+    final MusicController controller = MusicController.to;
+    controller.getMusics();
+    controller.musics(controller.musicList);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.grey),
+          iconTheme:
+              const IconThemeData(color: Color.fromRGBO(158, 158, 158, 1)),
           backgroundColor: Colors.black54,
           elevation: 0.0,
           title: const Text(
@@ -32,6 +29,7 @@ class _SearchViewState extends State<SearchView> {
           ),
           centerTitle: true,
         ),
+        // search bar
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
@@ -80,14 +78,9 @@ class _SearchViewState extends State<SearchView> {
                               ),
                             ),
                             onPressed: () {
-                              if (textEditingController.value ==
-                                  TextEditingValue.empty) {
-                                // 올라온 키보드 끄기
-                                FocusManager.instance.primaryFocus?.unfocus();
-                              }
-                              textEditingController.value =
-                                  TextEditingValue.empty;
-                              songLists;
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              textEditingController.clear();
+                              controller.musics(controller.musicList);
                             },
                           ),
                         ),
@@ -98,88 +91,106 @@ class _SearchViewState extends State<SearchView> {
                 ),
               ),
               const SizedBox(height: 15),
-              Expanded(
-                child: FutureBuilder(
-                    future: songs,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
+              // music lists
+              Obx(() {
+                return Expanded(
+                  child: FutureBuilder(
+                      future:
+                          rootBundle.loadString(controller.musics.toString()),
+                      builder: (context, snapshot) {
                         return ListView.builder(
-                          itemCount: songLists.length,
-                          itemBuilder: (context, index) {
-                            final song = snapshot.data![index];
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(bottom: 8),
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 15),
-                                  SizedBox(
-                                    width: 185,
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            song.title,
-                                            style: MyFontFamily.subTitle,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            song.singer,
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 14,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ],
+                            itemCount: controller.musics.length,
+                            itemBuilder: (context, index) {
+                              if (snapshot.connectionState !=
+                                  ConnectionState.done) {
+                                return const CircularProgressIndicator();
+                              } else if (controller.musics.isEmpty) {
+                                return const Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 50),
+                                    child: Text(
+                                      "등록된 노래가 없습니다",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 35),
-                                  IconButton(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      // controller.isPlaying.value
-                                      //     ? Icons.pause
-                                      //     : Icons.play_arrow,
-                                      Icons.play_arrow,
-                                      size: 35,
-                                      color: Colors.white,
-                                    ),
+                                );
+                              } else {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 10, 0, 0),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 8),
+                                        width: 40,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 15),
+                                      SizedBox(
+                                        width: 185,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                controller.musics[index].title,
+                                                style: MyFontFamily.subTitle,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              Text(
+                                                controller.musics[index].singer,
+                                                style: const TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 14,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 35),
+                                      IconButton(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 10),
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.play_arrow,
+                                          size: 35,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const Padding(
+                                        padding: EdgeInsets.only(bottom: 10),
+                                        child: Icon(
+                                          Icons.more_vert,
+                                          size: 33,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  const Padding(
-                                    padding: EdgeInsets.only(bottom: 10),
-                                    child: Icon(
-                                      Icons.more_vert,
-                                      size: 33,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }),
-              ),
+                                );
+                              }
+                            });
+                      }),
+                );
+              }),
             ],
           ),
         ),
@@ -188,16 +199,14 @@ class _SearchViewState extends State<SearchView> {
   }
 
   void searchSong(String title) {
-    final search = songLists.where((song) {
-      final songTitle = song['title']?.toLowerCase() ?? '';
-      final input = title.toLowerCase();
+    final MusicController controller = MusicController.to;
 
+    final searchedSong = controller.musicList.where((song) {
+      final songTitle = song.title.toLowerCase();
+      final input = title.toLowerCase();
       return songTitle.contains(input);
     }).toList();
 
-    setState(() {
-      songLists = search;
-    });
-    print("제목!!!! ${title}");
+    controller.musics(searchedSong);
   }
 }

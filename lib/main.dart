@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_app_clone_coding/routes/home/home.view.dart';
 import 'package:music_app_clone_coding/routes/player/lyrics.view.dart';
+import 'package:music_app_clone_coding/routes/player/music.controller.dart';
 import 'package:music_app_clone_coding/routes/player/player.controller.dart';
 import 'package:music_app_clone_coding/routes/player/player.view.dart';
 import 'package:music_app_clone_coding/routes/player/search.view.dart';
@@ -29,7 +30,13 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(name: '/player', page: () => const PlayerView()),
         GetPage(name: '/lyrics', page: () => const LyricsView()),
-        GetPage(name: '/search', page: () => const SearchView()),
+        GetPage(
+          name: '/search',
+          page: () => const SearchView(),
+          binding: BindingsBuilder(() {
+            Get.put(MusicController());
+          }),
+        ),
       ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
