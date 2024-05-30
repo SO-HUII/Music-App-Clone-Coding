@@ -2,30 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:music_app_clone_coding/common/style/font.dart';
-import 'package:music_app_clone_coding/models/music.model.dart';
 import 'package:music_app_clone_coding/routes/player/music.controller.dart';
 
-class SearchView extends StatefulWidget {
+class SearchView extends StatelessWidget {
   const SearchView({super.key});
 
   @override
-  State<SearchView> createState() => _SearchViewState();
-}
-
-class _SearchViewState extends State<SearchView> {
-  final textEditingController = TextEditingController();
-  final MusicController controller = MusicController.to;
-  List<MusicModel> musics = <MusicModel>[];
-
-  @override
-  void initState() {
-    controller.getMusics();
-    musics = controller.musicList;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final textEditingController = TextEditingController();
+    final MusicController controller = MusicController.to;
+    controller.getMusics();
+    controller.musics(controller.musicList);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -92,7 +80,7 @@ class _SearchViewState extends State<SearchView> {
                             onPressed: () {
                               FocusManager.instance.primaryFocus?.unfocus();
                               textEditingController.clear();
-                              musics = controller.musicList;
+                              controller.musics(controller.musicList);
                             },
                           ),
                         ),
@@ -103,80 +91,106 @@ class _SearchViewState extends State<SearchView> {
                 ),
               ),
               const SizedBox(height: 15),
-              Expanded(
-                child: FutureBuilder(
-                    future: rootBundle.loadString(controller.musicList.string),
-                    builder: (context, snapshot) {
-                      return ListView.builder(
-                        itemCount: controller.musicList.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 8),
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(width: 15),
-                                SizedBox(
-                                  width: 185,
+              // music lists
+              Obx(() {
+                return Expanded(
+                  child: FutureBuilder(
+                      future:
+                          rootBundle.loadString(controller.musics.toString()),
+                      builder: (context, snapshot) {
+                        return ListView.builder(
+                            itemCount: controller.musics.length,
+                            itemBuilder: (context, index) {
+                              if (snapshot.connectionState !=
+                                  ConnectionState.done) {
+                                return const CircularProgressIndicator();
+                              } else if (controller.musics.isEmpty) {
+                                return const Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          controller.musicList[index].title,
-                                          style: MyFontFamily.subTitle,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Obx(() {
-                                          return Text(
-                                            controller.musicList[index].singer,
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 14,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          );
-                                        }),
-                                      ],
+                                    padding: EdgeInsets.symmetric(vertical: 50),
+                                    child: Text(
+                                      "등록된 노래가 없습니다",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(width: 35),
-                                IconButton(
-                                  padding: const EdgeInsets.only(bottom: 10),
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.play_arrow,
-                                    size: 35,
-                                    color: Colors.white,
+                                );
+                              } else {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 10, 0, 0),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 8),
+                                        width: 40,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 15),
+                                      SizedBox(
+                                        width: 185,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                controller.musics[index].title,
+                                                style: MyFontFamily.subTitle,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              Text(
+                                                controller.musics[index].singer,
+                                                style: const TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 14,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 35),
+                                      IconButton(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 10),
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.play_arrow,
+                                          size: 35,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const Padding(
+                                        padding: EdgeInsets.only(bottom: 10),
+                                        child: Icon(
+                                          Icons.more_vert,
+                                          size: 33,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(bottom: 10),
-                                  child: Icon(
-                                    Icons.more_vert,
-                                    size: 33,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    }),
-              ),
+                                );
+                              }
+                            });
+                      }),
+                );
+              }),
             ],
           ),
         ),
@@ -190,13 +204,9 @@ class _SearchViewState extends State<SearchView> {
     final searchedSong = controller.musicList.where((song) {
       final songTitle = song.title.toLowerCase();
       final input = title.toLowerCase();
-
       return songTitle.contains(input);
     }).toList();
 
-    // controller.musicList(searchedSong);
-    musics = searchedSong;
-
-    print("제목!!!! ${title}");
+    controller.musics(searchedSong);
   }
 }

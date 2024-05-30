@@ -12,6 +12,7 @@ class MusicController extends GetxController {
   }
 
   RxList<MusicModel> musicList = <MusicModel>[].obs;
+  RxList<MusicModel> musics = <MusicModel>[].obs;
 
   getMusics() async {
     final data = await _musicRepository.getMusics();
