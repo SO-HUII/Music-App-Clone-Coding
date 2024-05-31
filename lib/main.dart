@@ -25,7 +25,10 @@ class MyApp extends StatelessWidget {
           name: '/home',
           page: () => const HomeView(),
           binding: BindingsBuilder(() {
-            Get.put(PlayerController());
+            [
+              Get.put(PlayerController()),
+              Get.put(MusicController()),
+            ];
           }),
         ),
         GetPage(name: '/player', page: () => const PlayerView()),
