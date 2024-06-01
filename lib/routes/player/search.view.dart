@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:music_app_clone_coding/common/style/font.dart';
 import 'package:music_app_clone_coding/routes/player/music.controller.dart';
+import 'package:music_app_clone_coding/routes/player/musicDetail.view.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
@@ -125,15 +126,46 @@ class SearchView extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Container(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 8),
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          color: Colors.white,
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MusicDetailView(
+                                                tag:
+                                                    controller.musics[index].no,
+                                                title: controller
+                                                    .musics[index].title,
+                                                singer: controller
+                                                    .musics[index].singer,
+                                                composer: controller
+                                                    .musics[index].composer,
+                                                lyricist: controller
+                                                    .musics[index].lyricist,
+                                                release: controller
+                                                    .musics[index].release,
+                                              ),
+                                              fullscreenDialog: true,
+                                            ),
+                                          );
+                                        },
+                                        child: Hero(
+                                          tag: controller.musics[index].no,
+                                          child: Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 8),
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              image: const DecorationImage(
+                                                image: AssetImage(
+                                                    'assets/images/album.png'),
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       const SizedBox(width: 15),
