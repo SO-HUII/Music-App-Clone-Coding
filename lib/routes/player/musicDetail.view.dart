@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:music_app_clone_coding/routes/player/music.controller.dart';
 
+List<String> subTitle = ["발매일", "작곡", "작사"];
+
 class MusicDetailView extends StatelessWidget {
   final String tag, title, singer, composer, lyricist, release;
   const MusicDetailView({
@@ -51,7 +53,7 @@ class MusicDetailView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  margin: const EdgeInsets.fromLTRB(0, 35, 0, 10),
                   width: 150,
                   height: 150,
                   decoration: BoxDecoration(
@@ -99,7 +101,7 @@ class MusicDetailView extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             Divider(
               height: 1,
               color: Colors.grey.withOpacity(0.2),
@@ -118,15 +120,15 @@ class MusicDetailView extends StatelessWidget {
                     title,
                     style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 14,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 5),
                   Text(
                     singer,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 15,
                       color: Colors.green,
                       fontWeight: FontWeight.bold,
                     ),
@@ -136,7 +138,24 @@ class MusicDetailView extends StatelessWidget {
                     height: 1,
                     color: Colors.grey.withOpacity(0.2),
                   ),
-                  
+                  const SizedBox(height: 5),
+                  for (int i = 0; i < 3; i++)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        children: [
+                          Text(
+                            subTitle[i],
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Color.fromARGB(255, 71, 71, 71),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          detailText(i),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -146,6 +165,7 @@ class MusicDetailView extends StatelessWidget {
     );
   }
 
+  // 버튼 위젯
   Widget button(String name) {
     return SizedBox(
       width: 120,
@@ -175,7 +195,7 @@ class MusicDetailView extends StatelessWidget {
             Text(
               name,
               style: TextStyle(
-                color: Colors.grey[600],
+                color: Colors.grey[800],
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -183,5 +203,28 @@ class MusicDetailView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // 노래 상세 정보 위젯
+  Widget detailText(i) {
+    switch (i) {
+      case 0:
+        return Text(
+          release,
+          style: const TextStyle(color: Colors.black, fontSize: 13),
+        );
+      case 1:
+        return Text(
+          composer,
+          style: const TextStyle(color: Colors.black, fontSize: 13),
+        );
+      case 2:
+        return Text(
+          lyricist,
+          style: const TextStyle(color: Colors.black, fontSize: 13),
+        );
+      default:
+        return const Text("");
+    }
   }
 }
