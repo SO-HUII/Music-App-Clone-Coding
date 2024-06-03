@@ -73,6 +73,13 @@ scrollable_positioned_list: ^0.3.8
 
 <br>
 
+**동작 화면**
+|음악 재생|음악 싱크로율에 맞추어 가사 이동|음원 검색 및 상세정보|
+| ----------- | ------------ | ------------ |
+|![musicapp (1)](https://github.com/SO-HUII/Music-App-Clone-Coding/assets/109736890/568eb278-e0a8-4f44-acbb-9f409d93d1ed)|![musicapp (2)](https://github.com/SO-HUII/Music-App-Clone-Coding/assets/109736890/b8c1d279-9edf-4610-84b2-0fd65ea7830a)|![musicapp (3)](https://github.com/SO-HUII/Music-App-Clone-Coding/assets/109736890/ac66e1cd-501d-4d6a-827b-ebb05829754a)|
+
+<br>
+
 ## ✅ 커밋 컨벤션
 
 | 제목        | 내용                                                                             |
