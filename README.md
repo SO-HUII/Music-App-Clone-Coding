@@ -38,7 +38,7 @@ scrollable_positioned_list: ^0.3.8
 - 홈 화면 하단의 small player 재생 버튼 클릭시 음악 재생
 - small player 클릭 시 player view로 이동
 
-<img src="Screenshot.png"/>
+![캡처](https://github.com/SO-HUII/Music-App-Clone-Coding/assets/109736890/552555dc-2671-4e25-843f-43a346037278)
 
 
 <br>
@@ -49,7 +49,7 @@ scrollable_positioned_list: ^0.3.8
 - player view에서는 두 줄 감상 가능
 - bottom bar 가사 icon 클릭 시 전체 가사 감상 가능 
 
-<img src="Screenshot1.png"/>
+![캡처1](https://github.com/SO-HUII/Music-App-Clone-Coding/assets/109736890/0785ad36-4c10-4ac7-99ee-982d8ae7043e)
 
 <br>
 
@@ -60,7 +60,7 @@ scrollable_positioned_list: ^0.3.8
 - cancel icon 클릭시, 입력된 제목이 리셋되고 전체 목록이 보여짐.
 - 단, 검색은 최소 음절 입력시 음원 찾기 가능.
 
-<img src="Screenshot2.png"/>
+![캡처2](https://github.com/SO-HUII/Music-App-Clone-Coding/assets/109736890/865d92ff-3654-4f6d-858d-1ad677d5f788)
 
 <br>
 
