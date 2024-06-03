@@ -38,7 +38,7 @@ scrollable_positioned_list: ^0.3.8
 - 홈 화면 하단의 small player 재생 버튼 클릭시 음악 재생
 - small player 클릭 시 player view로 이동
 
-<img src="캡처.png"/>
+<img src="Screenshot.png"/>
 
 
 <br>
@@ -49,7 +49,7 @@ scrollable_positioned_list: ^0.3.8
 - player view에서는 두 줄 감상 가능
 - bottom bar 가사 icon 클릭 시 전체 가사 감상 가능 
 
-<img src="캡처1.png"/>
+<img src="Screenshot1.png"/>
 
 <br>
 
@@ -60,7 +60,7 @@ scrollable_positioned_list: ^0.3.8
 - cancel icon 클릭시, 입력된 제목이 리셋되고 전체 목록이 보여짐.
 - 단, 검색은 최소 음절 입력시 음원 찾기 가능.
 
-<img src="캡처2.png"/>
+<img src="Screenshot2.png"/>
 
 <br>
 
